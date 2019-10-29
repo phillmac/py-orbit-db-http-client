@@ -118,7 +118,7 @@ class SearchesTestCase(unittest.TestCase):
 class SearchPeersTestCase(unittest.TestCase):
     def setUp(self):
         self.client = OrbitDbAPI(base_url=base_url)
-        self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
+        self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
 
     def runTest(self):
         self.kevalue_test.findPeers(useCustomFindProvs=True)
