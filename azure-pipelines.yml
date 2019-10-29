@@ -1,5 +1,5 @@
 # Docker
-# Build a Docker image 
+# Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
@@ -14,7 +14,7 @@ variables:
 stages:
 - stage: Build
   displayName: Build image
-  jobs:  
+  jobs:
   - job: Build
     displayName: Build
     pool:
@@ -23,8 +23,19 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
+        containerRegistry: 'OrbitDB Docker Hub'
+        repository: 'phillmac/py-orbit-db-http-client-dev'
         command: build
         dockerfile: '**/Dockerfile'
+        tags: |
+          latest
+          $(tag)
+    - task: Docker@2
+      displayName: Push image
+      inputs:
+        containerRegistry: 'OrbitDB Docker Hub'
+        repository: 'phillmac/py-orbit-db-http-client-dev'
+        command: 'push'
         tags: |
           latest
           $(tag)
