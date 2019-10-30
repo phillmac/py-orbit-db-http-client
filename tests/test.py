@@ -137,6 +137,8 @@ class SearchPeersTestCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    loglvl = int(os.environ.get('LOG_LEVEL',15))
+    print(f'Log level: {loglvl}')
     logfmt = '%(asctime)s - %(levelname)s - %(message)s'
-    logging.basicConfig(format=logfmt, stream=sys.stdout, level=int(os.environ.get('LOG_LEVEL',15)))
+    logging.basicConfig(format=logfmt, stream=sys.stdout, level=loglvl)
     unittest.main()
