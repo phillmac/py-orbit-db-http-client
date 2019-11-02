@@ -108,7 +108,8 @@ class DocStoreGetPutTestCase(unittest.TestCase):
             localDocs.append(item)
             self.docstore_test.put(item)
             self.assertDictContainsSubset(item, self.docstore_test.get(k)[0])
-        self.assertTrue(all(item in self.docstore_test.all() for item in localDocs))
+        contents = self.docstore_test.all()
+        self.assertTrue(all(item in contents for item in localDocs))
 
     def tearDown(self):
         self.docstore_test.unload()
