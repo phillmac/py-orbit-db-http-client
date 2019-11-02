@@ -21,7 +21,10 @@ def randString(k=5, lowercase=False, both=False):
 
 class CapabilitiesTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(base_url=base_url, headers={'connection':'close'})      #TODO: See https://github.com/encode/httpx/issues/96
+        client = OrbitDbAPI(
+            base_url=base_url,
+            headers={'connection':'close'} #TODO: See https://github.com/encode/httpx/issues/96
+        )
         self.kevalue_test = client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
         self.feed_test = client.db('feed_test', json={'create':True, 'type': 'feed'})
         self.event_test = client.db('event_test', json={'create':True, 'type': 'eventlog'})
@@ -44,7 +47,10 @@ class CapabilitiesTestCase(unittest.TestCase):
 
 class CounterIncrementTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(base_url=base_url, headers={'connection':'close'})      #TODO: See https://github.com/encode/httpx/issues/96
+        client = OrbitDbAPI(
+            base_url=base_url,
+            headers={'connection':'close'}      #TODO: See https://github.com/encode/httpx/issues/96
+        )
         self.counter_test = client.db('counter_test', json={'create':True, 'type': 'counter'})
 
     def runTest(self):
@@ -110,7 +116,10 @@ class DocStoreGetPutTestCase(unittest.TestCase):
 
 class SearchesTestCase(unittest.TestCase):
     def setUp(self):
-        self.client = OrbitDbAPI(base_url=base_url, headers={'connection':'close'})      #TODO: See https://github.com/encode/httpx/issues/96
+        self.client = OrbitDbAPI(
+            base_url=base_url,
+            headers={'connection':'close'}      #TODO: See https://github.com/encode/httpx/issues/96
+        )
         self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
 
 
@@ -125,7 +134,11 @@ class SearchesTestCase(unittest.TestCase):
 
 class SearchPeersTestCase(unittest.TestCase):
     def setUp(self):
-        self.client = OrbitDbAPI(base_url=base_url, headers={'connection':'close'})      #TODO: See https://github.com/encode/httpx/issues/96
+        self.client = OrbitDbAPI(
+            base_url=base_url,
+            headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
+            timeout=120
+        )
         self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
 
     def runTest(self):
