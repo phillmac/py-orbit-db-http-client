@@ -17,8 +17,8 @@ class OrbitDbAPI ():
         self.__timeout = self.__config.get('timeout', 30)
         self.__headers = httpx.Headers(self.__config.get('headers', {}))
         self.__session = httpx.Client(headers=self.__headers)
-        self.logger.debug('Base url: ' + self.__base_url)
-        self.logger.debug('Headers: ' + self.__headers.items())
+        self.logger.debug(f'Base url: {self.__base_url}')
+        self.logger.debug(f'Headers: {self.__headers.items()}')
 
     @property
     def session(self):
