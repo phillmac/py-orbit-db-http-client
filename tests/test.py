@@ -21,7 +21,7 @@ def randString(k=5, lowercase=False, both=False):
 
 class CapabilitiesTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(base_url=base_url)
+        client = OrbitDbAPI(base_url=base_url, headers={'connection':'close'})      #TODO: See https://github.com/encode/httpx/issues/96
         self.kevalue_test = client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
         self.feed_test = client.db('feed_test', json={'create':True, 'type': 'feed'})
         self.event_test = client.db('event_test', json={'create':True, 'type': 'eventlog'})
@@ -44,7 +44,7 @@ class CapabilitiesTestCase(unittest.TestCase):
 
 class CounterIncrementTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(base_url=base_url)
+        client = OrbitDbAPI(base_url=base_url, headers={'connection':'close'})      #TODO: See https://github.com/encode/httpx/issues/96
         self.counter_test = client.db('counter_test', json={'create':True, 'type': 'counter'})
 
     def runTest(self):
@@ -62,7 +62,11 @@ class CounterIncrementTestCase(unittest.TestCase):
 
 class KVStoreGetPutTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(base_url=base_url, use_db_cache=False)
+        client = OrbitDbAPI(
+            base_url=base_url,
+            use_db_cache=False,
+            headers={'connection':'close'} #TODO: See https://github.com/encode/httpx/issues/96
+        )
         self.kevalue_test = client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
 
     def runTest(self):
@@ -81,7 +85,11 @@ class KVStoreGetPutTestCase(unittest.TestCase):
 
 class DocStoreGetPutTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(base_url=base_url, use_db_cache=False)
+        client = OrbitDbAPI(
+            base_url=base_url,
+            use_db_cache=False,
+            headers={'connection':'close'} #TODO: See https://github.com/encode/httpx/issues/96
+        )
         self.docstore_test = client.db('docstore_test', json={'create':True, 'type': 'docstore'})
 
     def runTest(self):
@@ -102,7 +110,7 @@ class DocStoreGetPutTestCase(unittest.TestCase):
 
 class SearchesTestCase(unittest.TestCase):
     def setUp(self):
-        self.client = OrbitDbAPI(base_url=base_url)
+        self.client = OrbitDbAPI(base_url=base_url, headers={'connection':'close'})      #TODO: See https://github.com/encode/httpx/issues/96
         self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
 
 
