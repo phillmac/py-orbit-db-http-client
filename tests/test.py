@@ -149,6 +149,7 @@ class SearchPeersTestCase(unittest.TestCase):
             sleep(5)
             dbPeers = self.kevalue_test.getPeers()
             if count > 60: break
+            count +=1
         self.assertGreater(len(dbPeers), 0)
 
 
