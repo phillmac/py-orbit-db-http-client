@@ -153,8 +153,8 @@ class SearchPeersTestCase(unittest.TestCase):
         self.assertGreater(len(dbPeers), 0)
 
 
-#     def tearDown(self):
-#         self.kevalue_test.unload()
+    def tearDown(self):
+        self.kevalue_test.unload()
 
 
 
