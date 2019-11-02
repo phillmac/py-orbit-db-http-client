@@ -84,7 +84,7 @@ class KVStoreGetPutTestCase(unittest.TestCase):
             localKV[k] = v
             self.kevalue_test.put({'key':k, 'value':v})
             self.assertEqual(localKV.get(k), self.kevalue_test.get(k))
-            self.assertDictContainsSubset(localKV, self.kevalue_test.all())
+        self.assertDictContainsSubset(localKV, self.kevalue_test.all())
 
     def tearDown(self):
         self.kevalue_test.unload()
