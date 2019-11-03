@@ -39,3 +39,27 @@ stages:
         tags: |
           latest
           $(tag)
+    - task: TriggerBuild@3
+      inputs:
+        definitionIsInCurrentTeamProject: false
+        tfsServer: 'https://dev.azure.com/phillmac'
+        teamProject: 'orbit-db-http-api-dev-tests'
+        buildDefinition: 'phillmac.orbit-db-http-api-tests'
+        queueBuildForUserThatTriggeredBuild: true
+        ignoreSslCertificateErrors: false
+        useSameSourceVersion: false
+        useSameBranch: false
+        branchToUse: 'master'
+        waitForQueuedBuildsToFinish: true
+        waitForQueuedBuildsToFinishRefreshTime: '30'
+        failTaskIfBuildsNotSuccessful: true
+        cancelBuildsIfAnyFails: false
+        treatPartiallySucceededBuildAsSuccessful: false
+        downloadBuildArtifacts: false
+        storeInEnvironmentVariable: false
+        authenticationMethod: 'Personal Access Token'
+        enableBuildInQueueCondition: false
+        dependentOnSuccessfulBuildCondition: false
+        dependentOnFailedBuildCondition: false
+        checkbuildsoncurrentbranch: false
+        failTaskIfConditionsAreNotFulfilled: false
