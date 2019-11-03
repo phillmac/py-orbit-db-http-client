@@ -57,7 +57,7 @@ stages:
         treatPartiallySucceededBuildAsSuccessful: false
         downloadBuildArtifacts: false
         storeInEnvironmentVariable: false
-        authenticationMethod: 'Personal Access Token'
+        authenticationMethod: 'OAuth Token'
         enableBuildInQueueCondition: false
         dependentOnSuccessfulBuildCondition: false
         dependentOnFailedBuildCondition: false
