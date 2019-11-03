@@ -100,7 +100,7 @@ class KVStoreTestCase(unittest.TestCase):
     def tearDown(self):
         self.kevalue_test.unload()
 
-class DocStoreGetPutTestCase(unittest.TestCase):
+class DocStoreTestCase(unittest.TestCase):
     def setUp(self):
         client = OrbitDbAPI(
             base_url=base_url,
@@ -119,8 +119,18 @@ class DocStoreGetPutTestCase(unittest.TestCase):
             localDocs.append(item)
             self.docstore_test.put(item)
             self.assertDictContainsSubset(item, self.docstore_test.get(k)[0])
+
         remoteDocs = self.docstore_test.all()
         self.assertTrue(all(item in remoteDocs for item in localDocs))
+
+        DeletedDocs = []
+        for _c in range(1,75):
+            item = random.choice([d for d in localDocs if not d in DeletedDocs])
+            DeletedDocs.append(item)
+            self.docstore_test.remove(item['_id'])
+        remoteDocs = self.docstore_test.all()
+        self.assertTrue(all(d not in remoteDocs for d in DeletedDocs))
+
 
     def tearDown(self):
         self.docstore_test.unload()
