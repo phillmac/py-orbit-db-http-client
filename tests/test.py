@@ -66,7 +66,7 @@ class CounterIncrementTestCase(unittest.TestCase):
         self.counter_test.unload()
 
 
-class KVStoreGetPutTestCase(unittest.TestCase):
+class KVStoreTestCase(unittest.TestCase):
     def setUp(self):
         client = OrbitDbAPI(
             base_url=base_url,
@@ -84,7 +84,18 @@ class KVStoreGetPutTestCase(unittest.TestCase):
             localKV[k] = v
             self.kevalue_test.put({'key':k, 'value':v})
             self.assertEqual(localKV.get(k), self.kevalue_test.get(k))
+
         self.assertDictContainsSubset(localKV, self.kevalue_test.all())
+
+        DeletedKeys = []
+        for _c in range(1,75):
+            delk = random.choice(k for k in localKV.keys() if not k in DeletedKeys)
+            DeletedKeys.append(delk)
+            self.kevalue_test.remove(delk)
+        remoteKeys = self.kevalue_test.all().keys()
+        self.assertTrue(all(k not in remoteKeys for k in DeletedKeys))
+
+
 
     def tearDown(self):
         self.kevalue_test.unload()
