@@ -42,7 +42,7 @@ stages:
     - task: TriggerBuild@3
       inputs:
         definitionIsInCurrentTeamProject: false
-        tfsServer: 'https://dev.azure.com/phillmac'
+        tfsServer: 'https://phillmac.visualstudio.com'
         teamProject: 'orbit-db-http-api-dev-tests'
         buildDefinition: 'phillmac.orbit-db-http-api-tests'
         queueBuildForUserThatTriggeredBuild: true
