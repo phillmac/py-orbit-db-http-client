@@ -89,7 +89,7 @@ class KVStoreTestCase(unittest.TestCase):
 
         DeletedKeys = []
         for _c in range(1,75):
-            delk = random.choice(k for k in localKV.keys() if not k in DeletedKeys)
+            delk = random.choice([k for k in localKV.keys() if not k in DeletedKeys])
             DeletedKeys.append(delk)
             self.kevalue_test.remove(delk)
         remoteKeys = self.kevalue_test.all().keys()
