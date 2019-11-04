@@ -35,6 +35,9 @@ class OrbitDbAPI ():
     def use_db_cache(self):
         return self.__use_db_cache
 
+    def close(self):
+        self.__session.close()
+
     def _do_request(self, *args, **kwargs):
         self.logger.log(15, json.dumps([args, kwargs]))
         #kwargs['timeout'] = kwargs.get('timeout', self.__timeout)
