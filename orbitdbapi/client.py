@@ -4,6 +4,7 @@ from pprint import pformat
 from urllib.parse import quote as urlquote
 
 import httpx
+from sseclient import SSEClient
 
 from .db import DB
 
@@ -81,3 +82,9 @@ class OrbitDbAPI ():
     def searches(self):
         endpoint = '/'.join(['peers', 'searches'])
         return self._call('GET', endpoint)
+
+    def events(self, eventnames):
+        endpoint = '/'.join(['events', urlquote(eventnames, safe='')])
+        res = self._call_raw('GET', endpoint, stream=True)
+        res.raise_for_status()
+        return SSEClient(res.stream()).events()

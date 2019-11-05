@@ -205,8 +205,8 @@ class DB ():
         endpoint = '/'.join(['db', self.__id_safe])
         return self.__client._call('DELETE', endpoint)
 
-    def events(self, eventname):
-        endpoint = '/'.join(['db', self.__id_safe, 'events', urlquote(eventname, safe='')])
+    def events(self, eventnames):
+        endpoint = '/'.join(['db', self.__id_safe, 'events', urlquote(eventnames, safe='')])
         res = self.__client._call_raw('GET', endpoint, stream=True)
         res.raise_for_status()
         return SSEClient(res.stream()).events()
