@@ -21,15 +21,15 @@ def randString(k=5, lowercase=False, both=False):
 
 class CapabilitiesTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(
+        self.client = OrbitDbAPI(
             base_url=base_url,
             headers={'connection':'close'} #TODO: See https://github.com/encode/httpx/issues/96
         )
-        self.kevalue_test = client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
-        self.feed_test = client.db('feed_test', json={'create':True, 'type': 'feed'})
-        self.event_test = client.db('event_test', json={'create':True, 'type': 'eventlog'})
-        self.docstore_test = client.db('docstore_test', json={'create':True, 'type': 'docstore'})
-        self.counter_test = client.db('counter_test', json={'create':True, 'type': 'counter'})
+        self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
+        self.feed_test = self.client.db('feed_test', json={'create':True, 'type': 'feed'})
+        self.event_test = self.client.db('event_test', json={'create':True, 'type': 'eventlog'})
+        self.docstore_test = self.client.db('docstore_test', json={'create':True, 'type': 'docstore'})
+        self.counter_test = self.client.db('counter_test', json={'create':True, 'type': 'counter'})
 
     def runTest(self):
         self.assertEqual(set(['get', 'put', 'remove']), set(self.kevalue_test.capabilities))
@@ -44,14 +44,15 @@ class CapabilitiesTestCase(unittest.TestCase):
         self.event_test.unload()
         self.docstore_test.unload()
         self.counter_test.unload()
+        self.client.close()
 
 class CounterIncrementTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(
+        self.client = OrbitDbAPI(
             base_url=base_url,
             headers={'connection':'close'}      #TODO: See https://github.com/encode/httpx/issues/96
         )
-        self.counter_test = client.db('counter_test', json={'create':True, 'type': 'counter'})
+        self.counter_test = self.client.db('counter_test', json={'create':True, 'type': 'counter'})
 
     def runTest(self):
         localVal = self.counter_test.value()
@@ -68,12 +69,12 @@ class CounterIncrementTestCase(unittest.TestCase):
 
 class KVStoreTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(
+        self.client = OrbitDbAPI(
             base_url=base_url,
             use_db_cache=False,
             headers={'connection':'close'} #TODO: See https://github.com/encode/httpx/issues/96
         )
-        self.kevalue_test = client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
+        self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
 
     def runTest(self):
         self.assertFalse(self.kevalue_test.cached)
@@ -99,15 +100,17 @@ class KVStoreTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.kevalue_test.unload()
+        self.client.close()
+
 
 class DocStoreTestCase(unittest.TestCase):
     def setUp(self):
-        client = OrbitDbAPI(
+        self.client = OrbitDbAPI(
             base_url=base_url,
             use_db_cache=False,
             headers={'connection':'close'} #TODO: See https://github.com/encode/httpx/issues/96
         )
-        self.docstore_test = client.db('docstore_test', json={'create':True, 'type': 'docstore'})
+        self.docstore_test = self.client.db('docstore_test', json={'create':True, 'type': 'docstore'})
 
     def runTest(self):
         self.assertFalse(self.docstore_test.cached)
@@ -134,6 +137,8 @@ class DocStoreTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.docstore_test.unload()
+        self.client.close()
+
 
 
 class SearchesTestCase(unittest.TestCase):
@@ -153,6 +158,7 @@ class SearchesTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.kevalue_test.unload()
+        self.client.close()
 
 class SearchPeersTestCase(unittest.TestCase):
     def setUp(self):
@@ -177,6 +183,7 @@ class SearchPeersTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.kevalue_test.unload()
+        self.client.close()
 
 
 
