@@ -165,9 +165,16 @@ class SearchPeersTestCase(unittest.TestCase):
         self.client = OrbitDbAPI(
             base_url=base_url,
             headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
-            timeout=600
         )
-        self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
+
+        events = self.client.events('open')
+        self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
+        for event in events:
+            if event.event == 'open' and event.data['address'] == 'zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+                logging.info('Got db open event')
+                break
+
+        self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
 
     def runTest(self):
         self.kevalue_test.findPeers(useCustomFindProvs=True)
