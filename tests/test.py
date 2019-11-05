@@ -165,7 +165,7 @@ class SearchPeersTestCase(unittest.TestCase):
         self.client = OrbitDbAPI(
             base_url=base_url,
             headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
-            timeout=120
+            timeout=600
         )
         self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
 
