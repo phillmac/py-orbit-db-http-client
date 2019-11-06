@@ -176,7 +176,7 @@ class SearchPeersTestCase(unittest.TestCase):
             else:
                 logging.log(15, f'Event:{event.event}')
 
-        self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
+        self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
 
     def runTest(self):
         self.kevalue_test.findPeers(useCustomFindProvs=True)
