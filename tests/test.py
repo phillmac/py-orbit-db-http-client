@@ -7,6 +7,7 @@ import string
 import sys
 import unittest
 from pprint import pformat
+from time import sleep
 
 from orbitdbapi.client import OrbitDbAPI
 
@@ -167,23 +168,23 @@ class SearchPeersTestCase(unittest.TestCase):
             headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
         )
 
-        events = self.client.events('open,ready,load')
+        #events = self.client.events('open,ready,load')
 
-        for event in events:
-            if event.event == 'registered':
-                logging.log(15, f'Got registered event: {pformat(event.json)}')
-                break
-            else:
-                logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
+        # for event in events:
+        #     if event.event == 'registered':
+        #         logging.log(15, f'Got registered event: {pformat(event.json)}')
+        #         break
+        #     else:
+        #         logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
 
-        self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False})
+        # self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False})
 
-        for event in events:
-            if event.event == 'ready' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
-                logging.log(15,'Got db ready event')
-                break
-            else:
-                logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
+        # for event in events:
+        #     if event.event == 'ready' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+        #         logging.log(15,'Got db ready event')
+        #         break
+        #     else:
+        #         logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
 
         self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
 
