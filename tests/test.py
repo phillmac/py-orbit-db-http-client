@@ -172,18 +172,18 @@ class SearchPeersTestCase(unittest.TestCase):
         self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
 
         for event in events:
-            if event.event == 'open' and event.data['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+            if event.event == 'open' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
                 logging.log(15,'Got db open event')
                 break
             else:
-                logging.log(15, f'Event: {event.event} Data: {pformat(event.data)}')
+                logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
 
         for event in events:
-            if event.event == 'ready' and event.data['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+            if event.event == 'ready' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
                 logging.log(15,'Got db ready event')
                 break
             else:
-                logging.log(15, f'Event: {event.event} Data: {pformat(event.data)}')
+                logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
 
         self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
 

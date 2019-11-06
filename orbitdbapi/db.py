@@ -210,7 +210,7 @@ class DB ():
         res = self.__client._call_raw('GET', endpoint, stream=True)
         res.raise_for_status()
         for event in SSEClient(res.stream()).events():
-            event.data = json.loads(event.data)
+            event.json = json.loads(event.data)
             yield event
 
     def findPeers(self, **kwargs):
