@@ -168,7 +168,7 @@ class SearchPeersTestCase(unittest.TestCase):
             headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
         )
 
-        events = self.client.events('open,ready')
+        events = self.client.events('open,ready,load')
         self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
 
         for event in events:
