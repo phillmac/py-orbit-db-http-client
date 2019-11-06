@@ -12,7 +12,7 @@ from time import sleep
 from orbitdbapi.client import OrbitDbAPI
 
 base_url=os.environ.get('ORBIT_DB_HTTP_API_URL')
-timeout = os.environ.get('ORBIT_DB_HTTP_API_TIMEOUT', 120)
+timeout = int(os.environ.get('ORBIT_DB_HTTP_API_TIMEOUT', 120))
 
 def randString(k=5, lowercase=False, both=False):
     if both:
