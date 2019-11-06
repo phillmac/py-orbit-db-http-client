@@ -168,7 +168,7 @@ class SearchPeersTestCase(unittest.TestCase):
             headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
         )
 
-        events = self.client.events('open,load')
+        events = self.client.events('open,ready')
         self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
 
         for event in events:
@@ -179,8 +179,8 @@ class SearchPeersTestCase(unittest.TestCase):
                 logging.log(15, f'Event: {event.event} Data: {pformat(event.data)}')
 
         for event in events:
-            if event.event == 'load' and json.loads(event.data)['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
-                logging.log(15,'Got db load event')
+            if event.event == 'ready' and json.loads(event.data)['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+                logging.log(15,'Got db ready event')
                 break
             else:
                 logging.log(15, f'Event: {event.event} Data: {pformat(event.data)}')
