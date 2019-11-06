@@ -178,6 +178,13 @@ class SearchPeersTestCase(unittest.TestCase):
                 logging.log(15, f'Event: {event.event} Data: {pformat(event.data)}')
 
         self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
+        dbEvents = self.kevalue_test.events(['load'])
+        for event in dbEvents:
+            if event.event == 'load' and json.loads(event.data)['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+                logging.info('Got db load event')
+                break
+            else:
+                logging.log(15, f'Event: {event.event} Data: {pformat(event.data)}')
 
     def runTest(self):
         self.kevalue_test.findPeers(useCustomFindProvs=True)
