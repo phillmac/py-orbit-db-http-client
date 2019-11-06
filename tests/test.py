@@ -175,7 +175,7 @@ class SearchPeersTestCase(unittest.TestCase):
                 logging.info('Got db open event')
                 break
             else:
-                logging.log(15, f'Event:{pformat(event)}')
+                logging.log(15, f'Event:{event.event} Data:{pformat(event.data)}')
 
         self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
 
