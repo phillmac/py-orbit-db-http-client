@@ -169,6 +169,7 @@ class SearchPeersTestCase(unittest.TestCase):
         )
 
         events = self.client.events('open,ready,load')
+        sleep(1)
         self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
 
         for event in events:
