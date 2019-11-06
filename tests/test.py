@@ -185,6 +185,7 @@ class SearchPeersTestCase(unittest.TestCase):
                 logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
 
         self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False})
+        logging.info('Waiting for db to be ready...')
 
         for event in events:
             if event.event == 'ready' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
