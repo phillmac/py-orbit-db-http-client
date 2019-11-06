@@ -7,7 +7,6 @@ import string
 import sys
 import unittest
 from pprint import pformat
-from time import sleep
 
 from orbitdbapi.client import OrbitDbAPI
 
@@ -169,8 +168,15 @@ class SearchPeersTestCase(unittest.TestCase):
         )
 
         events = self.client.events('open,ready,load')
-        sleep(1)
-        self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
+
+        for event in events:
+            if event.event == 'registered':
+                logging.log(15, f'Got registered event:{pformat(event.json)}')
+                break
+            else:
+                logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
+
+        self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False})
 
         for event in events:
             if event.event == 'open' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
