@@ -87,4 +87,6 @@ class OrbitDbAPI ():
         endpoint = '/'.join(['events', urlquote(eventnames, safe='')])
         res = self._call_raw('GET', endpoint, stream=True)
         res.raise_for_status()
-        return SSEClient(res.stream()).events()
+        for event in SSEClient(res.stream()).events():
+            event.data = json.loads(event.data)
+            yield event

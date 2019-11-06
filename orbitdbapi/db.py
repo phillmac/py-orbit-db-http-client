@@ -209,7 +209,9 @@ class DB ():
         endpoint = '/'.join(['db', self.__id_safe, 'events', urlquote(eventnames, safe='')])
         res = self.__client._call_raw('GET', endpoint, stream=True)
         res.raise_for_status()
-        return SSEClient(res.stream()).events()
+        for event in SSEClient(res.stream()).events():
+            event.data = json.loads(event.data)
+            yield event
 
     def findPeers(self, **kwargs):
         endpoint = '/'.join(['peers','searches','db', self.__id_safe])
