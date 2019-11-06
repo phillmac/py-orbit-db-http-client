@@ -171,7 +171,7 @@ class SearchPeersTestCase(unittest.TestCase):
 
         for event in events:
             if event.event == 'registered':
-                logging.log(15, f'Got registered event:{pformat(event.json)}')
+                logging.log(15, f'Got registered event: {pformat(event.json)}')
                 break
             else:
                 logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
