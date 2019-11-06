@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'httpx >= 0.7.5',
-        'sseclient==0.0.24'
+        'sseclient-py >= 1.7'
         ],
     classifiers=[
         'Programming Language :: Python :: 3',
