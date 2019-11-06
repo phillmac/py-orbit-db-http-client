@@ -170,7 +170,7 @@ class SearchPeersTestCase(unittest.TestCase):
         events = self.client.events('open')
         self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False, 'awaitLoad': False})
         for event in events:
-            if event.event == 'open' and json.loads(event.data).address == 'zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+            if event.event == 'open' and json.loads(event.data)['address'] == 'zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
                 logging.info('Got db open event')
                 break
 
