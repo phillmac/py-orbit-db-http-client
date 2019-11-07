@@ -20,9 +20,9 @@ class DB ():
         self.__use_cache = kwargs.get('use_db_cache', client.use_db_cache)
         self.__enforce_caps = kwargs.get('enforce_caps', True)
         self.__enforce_indexby = kwargs.get('enforce_indexby', True)
-
-        self.logger = logging.getLogger(__name__)
         self.__index_by = self.__db_options.get('indexBy')
+        self.__sseClients = []
+        self.logger = logging.getLogger(__name__)
 
 
     def clear_cache(self):
@@ -108,6 +108,11 @@ class DB ():
     @property
     def write_access(self):
         return deepcopy(self.__params.get('write'))
+
+    def close(self):
+        for sseClient in self.__sseClients:
+            sseClient.close()
+        self.__client._remove_db(self)
 
     def info(self):
         endpoint = '/'.join(['db', self.__id_safe])
@@ -202,6 +207,7 @@ class DB ():
         return self.__client._call('DELETE', endpoint)
 
     def unload(self):
+        self.close()
         endpoint = '/'.join(['db', self.__id_safe])
         return self.__client._call('DELETE', endpoint)
 
@@ -209,9 +215,12 @@ class DB ():
         endpoint = '/'.join(['db', self.__id_safe, 'events', urlquote(eventnames, safe='')])
         res = self.__client._call_raw('GET', endpoint, stream=True)
         res.raise_for_status()
-        for event in SSEClient(res.stream()).events():
+        sseClient = SSEClient(res.stream())
+        self.__sseClients.append(sseClient)
+        for event in sseClient.events():
             event.json = json.loads(event.data)
             yield event
+        del self.__sseClients[self.__sseClients.index(sseClient)]
 
     def findPeers(self, **kwargs):
         endpoint = '/'.join(['peers','searches','db', self.__id_safe])

@@ -20,7 +20,9 @@ class OrbitDbAPI ():
         self.__session = httpx.Client(
             headers=self.__headers,
             timeout=self.__timeout
-            )
+        )
+        self.__sseClients = []
+        self.__dbs = []
         self.logger.debug(f'Base url: {self.__base_url}')
         self.logger.debug(f'Headers: {self.__headers.items()}')
 
@@ -37,7 +39,14 @@ class OrbitDbAPI ():
         return self.__use_db_cache
 
     def close(self):
+        for db in self.__dbs:
+            db.close()
+        for sseClient in self.__sseClients:
+            sseClient.close()
         self.__session.close()
+
+    def _remove_db(self, db):
+        del self.__dbs[self.__dbs.index(db)]
 
     def _do_request(self, *args, **kwargs):
         self.logger.log(15, json.dumps([args, kwargs]))
@@ -73,7 +82,9 @@ class OrbitDbAPI ():
 
     def db(self, dbname, local_options=None, **kwargs):
         if local_options is None: local_options = {}
-        return DB(self, self.open_db(dbname, **kwargs), **{**self.__config, **local_options})
+        db = DB(self, self.open_db(dbname, **kwargs), **{**self.__config, **local_options})
+        self.__dbs.append(db)
+        return db
 
     def open_db(self, dbname, **kwargs):
         endpoint = '/'.join(['db', urlquote(dbname, safe='')])
@@ -87,6 +98,9 @@ class OrbitDbAPI ():
         endpoint = '/'.join(['events', urlquote(eventnames, safe='')])
         res = self._call_raw('GET', endpoint, stream=True)
         res.raise_for_status()
-        for event in SSEClient(res.stream()).events():
+        sseClient = SSEClient(res.stream())
+        self.__sseClients.append(sseClient)
+        for event in sseClient.events():
             event.json = json.loads(event.data)
             yield event
+        del self.__sseClients[self.__sseClients.index(sseClient)]
