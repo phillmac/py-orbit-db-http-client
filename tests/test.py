@@ -198,12 +198,12 @@ class SearchPeersTestCase(unittest.TestCase):
 
 
     def runTest(self):
-        self.kevalue_test.findPeers(useCustomFindProvs=True)
+        self.kevalue_test.find_peers(useCustomFindProvs=True)
         dbPeers = []
         count = 0
         while len(dbPeers) < 1:
             sleep(5)
-            dbPeers = self.kevalue_test.getPeers()
+            dbPeers = self.kevalue_test.get_peers()
             if count > 60: break
             count +=1
         self.assertGreater(len(dbPeers), 0)

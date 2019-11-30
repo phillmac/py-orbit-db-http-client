@@ -222,11 +222,11 @@ class DB ():
             yield event
         del self.__sseClients[self.__sseClients.index(sseClient)]
 
-    def findPeers(self, **kwargs):
+    def find_peers(self, **kwargs):
         endpoint = '/'.join(['peers','searches','db', self.__id_safe])
         return self.__client._call('POST', endpoint, json=kwargs)
 
-    def getPeers(self):
+    def get_peers(self):
         endpoint = '/'.join(['db', self.__id_safe, 'peers'])
         return self.__client._call('GET', endpoint)
 
