@@ -146,27 +146,6 @@ class DocStoreTestCase(unittest.TestCase):
         self.client.close()
 
 
-
-class SearchesTestCase(unittest.TestCase):
-    def setUp(self):
-        self.client = OrbitDbAPI(
-            base_url=base_url,
-            headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
-            timeout=timeout
-        )
-        self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
-
-
-    def runTest(self):
-        self.kevalue_test.find_peers()
-        searches = self.client.searches()
-        self.assertGreater(len(searches), 0)
-        self.assertGreater(len([s for s in searches if s.get('searchID') == self.kevalue_test.id]), 0)
-
-    def tearDown(self):
-        self.kevalue_test.unload()
-        self.client.close()
-
 class SearchPeersTestCase(unittest.TestCase):
     def setUp(self):
         self.client = OrbitDbAPI(
