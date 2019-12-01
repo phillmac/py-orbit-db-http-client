@@ -13,7 +13,7 @@ setup(
     url='https://github.com/phillmac/py-orbit-db-http-client',
     packages=find_packages(),
     install_requires=[
-        'httpx >= 0.7.5',
+        'httpx == 0.7.8',
         'sseclient-py >= 1.7'
         ],
     classifiers=[
