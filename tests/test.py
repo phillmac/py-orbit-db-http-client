@@ -158,7 +158,7 @@ class SearchesTestCase(unittest.TestCase):
 
 
     def runTest(self):
-        self.kevalue_test.findPeers()
+        self.kevalue_test.find_peers()
         searches = self.client.searches()
         self.assertGreater(len(searches), 0)
         self.assertGreater(len([s for s in searches if s.get('searchID') == self.kevalue_test.id]), 0)
