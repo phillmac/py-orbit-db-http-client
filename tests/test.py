@@ -184,24 +184,26 @@ class SearchPeersTestCase(unittest.TestCase):
             else:
                 logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
 
-        self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False})
-        logging.info('Waiting for db to be ready...')
+        dbInfo = self.client.open_db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test', json={'awaitOpen': False})
+        if (not 'ready' in dbInfo) or (not dbInfo['ready']):
+            logging.info('Waiting for db to be ready...')
 
-        for event in events:
-            if event.event == 'ready' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
-                logging.log(15,'Got db ready event')
-                break
-            else:
-                logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
+            for event in events:
+                if event.event == 'ready' and event.json['address'] == '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test':
+                    logging.log(15,'Got db ready event')
+                    break
+                else:
+                    logging.log(15, f'Event: {event.event} Data: {pformat(event.json)}')
 
         self.kevalue_test = self.client.db('zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test')
+        self.assertTrue(self.kevalue_test.info()['ready'])
 
 
     def runTest(self):
         self.kevalue_test.find_peers(useCustomFindProvs=True)
         dbPeers = []
         count = 0
-        while len(dbPeers) < 1:
+        while len(dbPeers) < 1 and '/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test' in [s['searchID'] for s in self.client.searches()]:
             sleep(5)
             dbPeers = self.kevalue_test.get_peers()
             if count > 60: break
