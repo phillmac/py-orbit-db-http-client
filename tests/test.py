@@ -182,7 +182,7 @@ class SearchPeersTestCase(unittest.TestCase):
         self.kevalue_test.find_peers(useCustomFindProvs=True)
         dbPeers = []
         count = 0
-        while len(dbPeers) < 1 and ]:
+        while len(dbPeers) < 1 and:
             self.assertTrue('/orbitdb/zdpuAuSAkDDRm9KTciShAcph2epSZsNmfPeLQmxw6b5mdLmq5/keyvalue_test' in [s['searchID'] for s in self.client.searches()])
             sleep(5)
             dbPeers = self.kevalue_test.get_peers()
