@@ -38,7 +38,7 @@ class CapabilitiesTestCase(unittest.TestCase):
         self.assertEqual(set(['get', 'put', 'remove']), set(self.kevalue_test.capabilities))
         self.assertEqual(set(['add', 'get', 'iterator', 'remove']), set(self.feed_test.capabilities))
         self.assertEqual(set(['add', 'get', 'iterator']), set(self.event_test.capabilities))
-        self.assertEqual(set(['get', 'put', 'query', 'remove']), set(self.docstore_test.capabilities))
+        self.assertEqual(set(['get', 'put', 'putAll', 'query', 'remove']), set(self.docstore_test.capabilities))
         self.assertEqual(set(['inc', 'value']), set(self.counter_test.capabilities))
 
     def tearDown(self):
