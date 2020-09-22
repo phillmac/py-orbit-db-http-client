@@ -28,11 +28,11 @@ class CapabilitiesTestCase(unittest.TestCase):
             headers={'connection':'close'}, #TODO: See https://github.com/encode/httpx/issues/96
             timeout=timeout
         )
-        self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
-        self.feed_test = self.client.db('feed_test', json={'create':True, 'type': 'feed'})
-        self.event_test = self.client.db('event_test', json={'create':True, 'type': 'eventlog'})
-        self.docstore_test = self.client.db('docstore_test', json={'create':True, 'type': 'docstore'})
-        self.counter_test = self.client.db('counter_test', json={'create':True, 'type': 'counter'})
+        self.kevalue_test = self.client.db('keyvalue_cap_test', json={'create':True, 'type': 'keyvalue'})
+        self.feed_test = self.client.db('feed_cap_test', json={'create':True, 'type': 'feed'})
+        self.event_test = self.client.db('event_cap_test', json={'create':True, 'type': 'eventlog'})
+        self.docstore_test = self.client.db('docstore_cap_test', json={'create':True, 'type': 'docstore'})
+        self.counter_test = self.client.db('counter_cap_test', json={'create':True, 'type': 'counter'})
 
     def runTest(self):
         self.assertEqual(set(['get', 'put', 'remove']), set(self.kevalue_test.capabilities))
@@ -56,7 +56,7 @@ class CounterIncrementTestCase(unittest.TestCase):
             headers={'connection':'close'},      #TODO: See https://github.com/encode/httpx/issues/96
             timeout=timeout
         )
-        self.counter_test = self.client.db('counter_test', json={'create':True, 'type': 'counter'})
+        self.counter_test = self.client.db('counter_store_test', json={'create':True, 'type': 'counter'})
 
     def runTest(self):
         localVal = self.counter_test.value()
@@ -79,7 +79,7 @@ class KVStoreTestCase(unittest.TestCase):
             headers={'connection':'close'}, #TODO: See https://github.com/encode/httpx/issues/96
             timeout=timeout
         )
-        self.kevalue_test = self.client.db('keyvalue_test', json={'create':True, 'type': 'keyvalue'})
+        self.kevalue_test = self.client.db('keyvalue_store_test', json={'create':True, 'type': 'keyvalue'})
 
     def runTest(self):
         self.assertFalse(self.kevalue_test.cached)
@@ -116,7 +116,7 @@ class DocStoreTestCase(unittest.TestCase):
             headers={'connection':'close'}, #TODO: See https://github.com/encode/httpx/issues/96
             timeout=timeout
         )
-        self.docstore_test = self.client.db('docstore_test', json={'create':True, 'type': 'docstore'})
+        self.docstore_test = self.client.db('docstore_store_test', json={'create':True, 'type': 'docstore'})
 
     def runTest(self):
         self.assertFalse(self.docstore_test.cached)
